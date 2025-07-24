@@ -1,61 +1,68 @@
-import { Box, Button, For, Grid, GridItem, Stack } from "@chakra-ui/react";
-import { users } from "@/db";
+import { Box, Button, Grid, GridItem, Stack } from "@chakra-ui/react";
 import type { ListUserDTO } from "@/dtos/user/ListUserDTO";
 import UserCard from "@/components/user-card";
 import { limitUsersProfilePerPage } from "@/constants";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { UsersContext } from "@/context/UsersContext";
 
 interface UpdateCurrentPageOptions {
   action: "next" | "previous";
 }
 
 const ListUsers = () => {
+  const usersContext = useContext(UsersContext);
+  const { users } = usersContext;
+
   const mod = users.length % limitUsersProfilePerPage;
   const pagesNeeded =
-    (users.length - mod) / limitUsersProfilePerPage + (mod > 0 ? 1 : 0);
-  const [currentPage, setCurrentPage] = useState(0);
-  const [currentUsers, setCurrentUsers] = useState(
-    users.slice(currentPage, limitUsersProfilePerPage)
-  )<ListUserDTO[]>;
+    Math.floor(users.length / limitUsersProfilePerPage) + (mod > 0 ? 1 : 0);
 
-  const updateCurrentPage = ({ action }: UpdateCurrentPageOptions) =>
-    setCurrentPage((prev) => {
-      return action === "next" ? prev + 1 : prev - 1;
+  const [currentPageIndex, setCurrentPageIndex] = useState(0);
+  const [currentUsers, setCurrentUsers] = useState<ListUserDTO[]>([]);
+
+  useEffect(() => {
+    const start = currentPageIndex * limitUsersProfilePerPage;
+    const end = start + limitUsersProfilePerPage;
+    setCurrentUsers(users.slice(start, end));
+  }, [currentPageIndex, users]);
+
+  const updateCurrentPageIndex = ({ action }: UpdateCurrentPageOptions) => {
+    setCurrentPageIndex((prev) => {
+      if (action === "next" && prev < pagesNeeded - 1) {
+        return prev + 1;
+      }
+      if (action === "previous" && prev > 0) {
+        return prev - 1;
+      }
+      return prev;
     });
-
-  const switchPage = () => {
-    let nextPageIndex = currentPage;
-
-    if (nextPageIndex >= pagesNeeded) {
-      updateCurrentPage({ action: "previous" });
-      return;
-    }
-
-    nextPageIndex += 1;
-
-    const nextUsers = users.slice(
-      nextPageIndex * limitUsersProfilePerPage,
-      (nextPageIndex + 1) * limitUsersProfilePerPage
-    );
-
-    setCurrentPage(nextPageIndex);
-    setCurrentUsers(nextUsers);
   };
 
   return (
     <Stack wrap="wrap">
       <Grid gap="3" templateColumns="repeat(12, 1fr)" p="3">
-        <For each={currentUsers as ListUserDTO[]}>
-          {({ avatarLink, id, name }) => (
-            <GridItem colSpan={{ md: 4, base: 6 }} key={id}>
-              <UserCard name={name} avatarLink={avatarLink} id={id} />
-            </GridItem>
-          )}
-        </For>
+        {currentUsers.map(({ avatarLink, id, name }) => (
+          <GridItem colSpan={{ md: 4, base: 6 }} key={id}>
+            <UserCard name={name} avatarLink={avatarLink} id={id} />
+          </GridItem>
+        ))}
       </Grid>
-      <Box p="3" display="flex" justifyContent="end">
-        <Button variant="solid" colorScheme="blue" onClick={switchPage}>
-          {currentPage === pagesNeeded ? "Last Page" : "Next Page"}
+      <Box p="3" display="flex" justifyContent="end" gap="1">
+        <Button
+          variant="solid"
+          colorScheme="blue"
+          onClick={() => updateCurrentPageIndex({ action: "previous" })}
+          disabled={currentPageIndex <= 0}
+        >
+          Previous Page
+        </Button>
+        <Button
+          variant="solid"
+          colorScheme="blue"
+          onClick={() => updateCurrentPageIndex({ action: "next" })}
+          disabled={currentPageIndex >= pagesNeeded - 1}
+        >
+          Next Page
         </Button>
       </Box>
     </Stack>

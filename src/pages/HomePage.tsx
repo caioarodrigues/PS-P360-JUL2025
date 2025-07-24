@@ -3,7 +3,7 @@ import ListUsers from "../components/list-users";
 
 function HomePage() {
   return (
-    <Box bg="blue.200">
+    <Box minHeight="100vh" bg="blue.200">
       <Heading>Home</Heading>
       <Text>Bem-vindo à página inicial!</Text>
     
