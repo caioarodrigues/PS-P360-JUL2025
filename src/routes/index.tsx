@@ -1,18 +1,9 @@
-import { Box, Heading, Text } from "@chakra-ui/react";
 import { Routes, Route } from "react-router-dom";
-
-function HomeRoute() {
-  return (
-    <Box p={4}>
-      <Heading>Home</Heading>
-      <Text>Bem-vindo à página inicial!</Text>
-    </Box>
-  );
-}
+import HomePage from "@/pages/HomePage";
 
 const AppRoutes = () => (
   <Routes>
-    <Route path="/" element={<HomeRoute />} />
+    <Route path="/" element={<HomePage />} />
   </Routes>
 );
 
