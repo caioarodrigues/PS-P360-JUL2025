@@ -1,5 +1,5 @@
 import { Box, Heading, Text } from "@chakra-ui/react";
-import ListUsers from "../components/list-users";
+import UsersList from "../components/users-list";
 
 function HomePage() {
   return (
@@ -7,7 +7,7 @@ function HomePage() {
       <Heading>Home</Heading>
       <Text>Bem-vindo à página inicial!</Text>
     
-      <ListUsers />
+      <UsersList />
     </Box>
   );
 }
