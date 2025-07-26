@@ -7,8 +7,10 @@ interface UsersContextData {
 }
 
 interface CurrentSelectedUsersData {
-  currentSelectedUsers: IUser[];
-  setCurrentSelectedUsers: (users: IUser[]) => void;
+  currentSelectedUser: IUser | null;
+  setCurrentSelectedUser: (user: IUser | null) => void;
+  showUserDetails: boolean;
+  setShowUserDetails: (value: boolean) => void;
 }
 
 export const UsersContext = createContext<UsersContextData>({
@@ -16,8 +18,10 @@ export const UsersContext = createContext<UsersContextData>({
   setUsers: () => {},
 });
 
-export const CurrentSelectedUsersContext =
+export const CurrentSelectedUserContext =
   createContext<CurrentSelectedUsersData>({
-    currentSelectedUsers: [],
-    setCurrentSelectedUsers: () => {},
+    currentSelectedUser: null,
+    setCurrentSelectedUser: () => {},
+    showUserDetails: false,
+    setShowUserDetails: () => {},
   });

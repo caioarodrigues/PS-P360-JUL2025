@@ -1,13 +1,17 @@
-import { UsersContext } from "./context/UsersContext";
+import {
+  UsersContext,
+  CurrentSelectedUserContext,
+} from "./context/UsersContext";
+import type { IUser } from "./domain/entities/IUser";
 import AppRoutes from "./routes";
 import { users } from "@/db";
 import { useState } from "react";
 
 function App() {
-  const [allUsers, seAlltUsers] = useState(users);
+  const [allUsers, setAlltUsers] = useState<IUser[]>(users);
 
   return (
-    <UsersContext.Provider value={{ users: allUsers, setUsers: seAlltUsers }}>
+    <UsersContext.Provider value={{ users: allUsers, setUsers: setAlltUsers }}>
       <AppRoutes />
     </UsersContext.Provider>
   );

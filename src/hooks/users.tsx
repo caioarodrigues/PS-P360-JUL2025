@@ -1,10 +1,13 @@
 import type { ListUserDTO } from "@/dtos/user/ListUserDTO";
 import { useState } from "react";
 import { limitUsersProfilePerPage } from "@/constants";
+import type { IUser } from "@/domain/entities/IUser";
 
 function useUsersPagination() {
   const [currentPageIndex, setCurrentPageIndex] = useState(0);
-  const [currentListedUsers, setCurrentListedUsers] = useState<ListUserDTO[]>([]);
+  const [currentListedUsers, setCurrentListedUsers] = useState<ListUserDTO[]>(
+    []
+  );
 
   const nextPage = (pagesCount: number) => {
     console.log("nextPage", currentPageIndex, pagesCount);
@@ -12,7 +15,7 @@ function useUsersPagination() {
       setCurrentPageIndex((prev) => prev + 1);
     }
   };
-  
+
   const previousPage = () => {
     if (currentPageIndex > 0) {
       setCurrentPageIndex((prev) => prev - 1);
@@ -26,7 +29,15 @@ function useUsersPagination() {
     }
 
     return setCurrentListedUsers(users);
-  }
+  };
+
+  const showUserDetails = (userId: number, currentSelectedUsers: IUser[]) => {
+    const user = currentSelectedUsers.find((user) => user.id === userId);
+
+    console.log("showUserDetails", userId, user);
+  };
+
+  const hideUserDetails = () => {};
 
   return {
     currentPageIndex,
@@ -34,6 +45,8 @@ function useUsersPagination() {
     nextPage,
     previousPage,
     updateCurrentListedUsers,
+    showUserDetails,
+    hideUserDetails,
   };
 }
 

@@ -1,7 +1,9 @@
 import { Avatar, Card, Button } from "@chakra-ui/react";
 import type { ListUserDTO } from "@/dtos/user/ListUserDTO";
+import { Link } from "react-router-dom";
 
 const UserCard = ({ avatarLink, id, name }: ListUserDTO) => {
+
   return (
     <Card.Root key={id} variant="elevated">
       <Card.Body>
@@ -12,7 +14,9 @@ const UserCard = ({ avatarLink, id, name }: ListUserDTO) => {
         <Card.Title fontSize="md">{name}</Card.Title>
       </Card.Body>
       <Card.Footer justifyContent="flex-end">
-        <Button variant="outline">About</Button>
+        <Link to={`/about-user?id=${id}`}>
+          <Button variant="outline">About</Button>
+        </Link>
       </Card.Footer>
     </Card.Root>
   );

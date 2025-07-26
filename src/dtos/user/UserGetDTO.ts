@@ -1,7 +1,7 @@
 export interface UserGetDTO {
-  id: unknown;
-  name: unknown;
-  lastName: unknown;
-  email: unknown;
-  avatarLink: unknown;
+  id: number;
+  name: string;
+  lastName: string;
+  email: string;
+  avatarLink: string;
 }
