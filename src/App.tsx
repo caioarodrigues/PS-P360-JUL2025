@@ -1,7 +1,4 @@
-import {
-  UsersContext,
-  CurrentSelectedUserContext,
-} from "./context/UsersContext";
+import { UsersContext } from "./context/UsersContext";
 import type { IUser } from "./domain/entities/IUser";
 import AppRoutes from "./routes";
 import { users } from "@/db";
