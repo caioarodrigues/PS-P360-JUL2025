@@ -1,4 +1,4 @@
-import { Input, InputGroup, Stack, Highlight } from "@chakra-ui/react";
+import { Input, InputGroup, Stack, Highlight, Text } from "@chakra-ui/react";
 import { LuSearch, LuX } from "react-icons/lu";
 import { useContext } from "react";
 import { SearchContext } from "@/context/SearchContext";
@@ -40,6 +40,9 @@ const GlobalHeader = () => {
       </InputGroup>
       {searchQuery !== "" && (
         <Stack maxHeight="50vh" overflowY="auto">
+          {searchQuery.length > 0 && usersResult && usersResult.length === 0 && (
+            <Text>No users found for "{searchQuery}"</Text>
+          )}
           {usersResult && usersResult.length > 0 && (
             <Stack>
               <Highlight
