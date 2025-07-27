@@ -9,7 +9,16 @@ const UserDetailedCard = ({
   name,
 }: UserGetDTO) => {
   return (
-    <Card.Root key={id} bg="white" borderRadius="md" boxShadow="md">
+    <Card.Root
+      key={id}
+      bg="white"
+      borderRadius="md"
+      boxShadow="md"
+      display="flex"
+      justifyContent="center"
+      flexDirection="column"
+      alignItems="center"
+    >
       <Card.Header>
         <Avatar.Root boxSize="8rem" shape="rounded">
           <Avatar.Image src={avatarLink} />

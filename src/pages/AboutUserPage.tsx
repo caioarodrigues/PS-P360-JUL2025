@@ -23,7 +23,7 @@ function AboutUserPage() {
   return (
     <Box p="3" bg="blue.100" height="100%" flexGrow={1}>
       <Grid templateColumns="repeat(12, 1fr)" gapY={3}>
-        <GridItem colSpan={{ base: 12, md: 6 }} order={{ base: 1, md: 2 }}>
+        <GridItem colStart={{ base: 1, md: 4 }} colSpan={{ base: 12, md: 6 }} order={{ base: 1, md: 2 }}>
           <UserDetailedCard
             avatarLink={avatarLink}
             email={email}
