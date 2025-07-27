@@ -10,8 +10,7 @@ function useUsersPagination() {
   );
 
   const nextPage = (pagesCount: number) => {
-    console.log("nextPage", currentPageIndex, pagesCount);
-    if (currentPageIndex < pagesCount - 1) {
+    if (currentPageIndex < pagesCount) {
       setCurrentPageIndex((prev) => prev + 1);
     }
   };

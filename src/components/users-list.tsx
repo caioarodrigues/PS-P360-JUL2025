@@ -5,6 +5,7 @@ import { limitUsersProfilePerPage } from "@/constants";
 import { useContext, useEffect } from "react";
 import { UsersContext } from "@/context/UsersContext";
 import useUsersPagination from "@/hooks/users";
+import { PagesContext } from "@/context/PagesContext";
 
 const UsersList = () => {
   const {
@@ -15,10 +16,25 @@ const UsersList = () => {
     updateCurrentListedUsers,
   } = useUsersPagination();
   const { users } = useContext(UsersContext);
+  const { setCurrentPage } = useContext(PagesContext);
 
   const mod = users.length % limitUsersProfilePerPage;
   const pagesCount =
-    Math.floor(users.length / limitUsersProfilePerPage) + (mod > 0 ? 1 : 0);
+    Math.floor(users.length / limitUsersProfilePerPage) + (mod > 0 ? 1 : 0) - 1;
+
+  const nextPageHandler = (pagesCount: number) => {
+    if (currentPageIndex >= pagesCount) return;
+
+    nextPage(pagesCount);
+    setCurrentPage(currentPageIndex + 1);
+  };
+
+  const previousPageHandler = () => {
+    if (currentPageIndex <= 0) return;
+
+    previousPage();
+    setCurrentPage(currentPageIndex - 1);
+  };
 
   useEffect(() => {
     const start = currentPageIndex * limitUsersProfilePerPage;
@@ -39,7 +55,7 @@ const UsersList = () => {
         <Button
           variant="solid"
           colorScheme="blue"
-          onClick={previousPage}
+          onClick={previousPageHandler}
           disabled={currentPageIndex <= 0}
         >
           Previous Page
@@ -47,8 +63,8 @@ const UsersList = () => {
         <Button
           variant="solid"
           colorScheme="blue"
-          onClick={() => nextPage(pagesCount)}
-          disabled={currentPageIndex >= pagesCount - 1}
+          onClick={() => nextPageHandler(pagesCount)}
+          disabled={currentPageIndex >= pagesCount}
         >
           Next Page
         </Button>
