@@ -6,7 +6,7 @@ import { Box } from "@chakra-ui/react";
 
 const AppRoutes = () => {
   return (
-    <Box>
+    <Box minHeight="100vh" bg="blue.200">
       <GlobalHeader />
       <Routes>
         <Route path="/" element={<HomePage />} />
