@@ -39,7 +39,13 @@ function HomePage() {
   }, [currentPage, navigate]);
 
   return (
-    <Box>
+    <Box
+      flexGrow={1}
+      height="100%"
+      display="flex"
+      flexDirection="column"
+      justifyContent="space-between"
+    >
       <UsersList />
       <Box
         p="3"
