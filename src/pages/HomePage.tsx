@@ -7,6 +7,7 @@ import { limitUsersProfilePerPage } from "@/constants";
 import useUsersPagination from "@/hooks/users";
 import { UsersContext } from "@/context/UsersContext";
 import { usePageHandlers } from "@/handlers/usePageHandlers";
+import LoadingUsersList from "@/components/loading-users-list";
 
 function HomePage() {
   const { currentPage, setCurrentPage } = useContext(PagesContext);
@@ -29,8 +30,13 @@ function HomePage() {
   useEffect(() => {
     if (currentPage <= 0) navigate("/");
     else navigate(`/?page=${currentPage}`);
-
   }, [currentPage, navigate]);
+
+  if (!users || users.length === 0) {
+    return (
+      <LoadingUsersList />
+    );
+  }
 
   return (
     <Box
