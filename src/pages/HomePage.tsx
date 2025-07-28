@@ -6,11 +6,19 @@ import { useNavigate } from "react-router-dom";
 import { limitUsersProfilePerPage } from "@/constants";
 import useUsersPagination from "@/hooks/users";
 import { UsersContext } from "@/context/UsersContext";
+import { usePageHandlers } from "@/handlers/usePageHandlers";
 
 function HomePage() {
   const { currentPage, setCurrentPage } = useContext(PagesContext);
   const { users } = useContext(UsersContext);
   const { currentPageIndex, nextPage, previousPage } = useUsersPagination();
+  const { nextPageHandler, previousPageHandler } = usePageHandlers({
+    nextPage,
+    previousPage,
+    setCurrentPage,
+    currentPageIndex,
+  });
+
   const navigate = useNavigate();
 
   const mod = users.length % limitUsersProfilePerPage;
@@ -18,20 +26,6 @@ function HomePage() {
     Math.floor(users.length / limitUsersProfilePerPage) + (mod > 0 ? 1 : 0) - 1;
   const currentPageIndexToDisplay = currentPageIndex + 1;
   const currentPagesCountToDisplay = pagesCount + 1;
-
-  const nextPageHandler = (pagesCount: number) => {
-    if (currentPageIndex >= pagesCount) return;
-
-    nextPage(pagesCount);
-    setCurrentPage(currentPageIndex + 1);
-  };
-
-  const previousPageHandler = () => {
-    if (currentPageIndex <= 0) return;
-
-    previousPage();
-    setCurrentPage(currentPageIndex - 1);
-  };
 
   useEffect(() => {
     if (currentPage <= 0) navigate("/");
@@ -63,7 +57,7 @@ function HomePage() {
           onClick={previousPageHandler}
           disabled={currentPageIndex <= 0}
         >
-          Previous Page
+          Previous
         </Button>
         <Button
           variant="solid"
@@ -71,7 +65,7 @@ function HomePage() {
           onClick={() => nextPageHandler(pagesCount)}
           disabled={currentPageIndex >= pagesCount}
         >
-          Next Page
+          Next
         </Button>
       </Box>
     </Box>

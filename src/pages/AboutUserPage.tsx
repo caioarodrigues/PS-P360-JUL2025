@@ -1,5 +1,5 @@
 import { Link, useSearchParams } from "react-router-dom";
-import { Box, Button, Grid, GridItem } from "@chakra-ui/react";
+import { Box, Button, Grid, GridItem, Text } from "@chakra-ui/react";
 import { useContext, useLayoutEffect } from "react";
 import { UsersContext } from "@/context/UsersContext";
 import UserDetailedCard from "@/components/user-detailed-card";
@@ -15,7 +15,7 @@ function AboutUserPage() {
   });
 
   if (!user) {
-    return <div>User not found</div>;
+    return <Text fontWeight="bold">User not found</Text>;
   }
 
   const { avatarLink, email, id, lastName, name } = user;

@@ -7,19 +7,12 @@ import { SearchUserUseCase } from "@/useCases/SearchUserUseCase";
 import { SearchEmailUseCase } from "@/useCases/SearchEmailUseCase";
 import UserSearchResult from "./user-search-result";
 import EmailSearchResult from "./emails-search-result";
+import { useSearchHandlers } from "@/handlers/useSearchHandlers";
 
 const GlobalHeader = () => {
   const { searchQuery, setSearchQuery } = useContext(SearchContext);
   const { users } = useContext(UsersContext);
-
-  const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const value = event.currentTarget.value;
-    setSearchQuery(value);
-  };
-
-  const clearSearchHandler = () => {
-    return setSearchQuery("");
-  };
+  const { handleSearch, clearSearchHandler } = useSearchHandlers({ setSearchQuery });
 
   const usersResult = SearchUserUseCase.execute(searchQuery, users);
   const emailsResult = SearchEmailUseCase.execute(searchQuery, users);
