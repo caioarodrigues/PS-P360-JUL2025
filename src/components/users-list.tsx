@@ -22,8 +22,10 @@ const UsersList = () => {
   }, [currentPage, users]);
 
   return (
-    <Stack wrap="wrap" p="3">
-      <Text fontSize="2xl" fontWeight="bold" color="black">Listing all user profiles</Text>
+    <Stack wrap="wrap" p="3" width="100%">
+      <Text fontSize="2xl" fontWeight="bold" color="black">
+        Listing all user profiles
+      </Text>
       <Grid gap="3" templateColumns="repeat(12, 1fr)">
         {currentListedUsers.map(({ avatarLink, id, name }) => (
           <GridItem colSpan={{ md: 2, base: 6 }} key={id}>

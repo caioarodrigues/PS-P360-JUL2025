@@ -38,7 +38,9 @@ function HomePage() {
       height="100%"
       display="flex"
       flexDirection="column"
-      justifyContent="space-between"
+      alignItems="center"
+      width={{ base: "100%", md: "80%" }}
+      placeSelf="center"
     >
       <UsersList />
       <Box
@@ -47,8 +49,9 @@ function HomePage() {
         alignItems="center"
         justifyContent="end"
         gap="1"
+        width="100%"
       >
-        <Text>
+        <Text mx={1}>
           Page {currentPageIndexToDisplay} of {currentPagesCountToDisplay}
         </Text>
         <Button
