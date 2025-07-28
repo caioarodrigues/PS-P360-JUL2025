@@ -3,23 +3,25 @@ import UserCard from "@/components/user-card";
 import { limitUsersProfilePerPage } from "@/constants";
 import { useContext, useLayoutEffect, useState } from "react";
 import { UsersContext } from "@/context/UsersContext";
-import { PagesContext } from "@/context/PagesContext";
 import type { ListUserDTO } from "@/dtos/user/ListUserDTO";
 
-const UsersList = () => {
+interface UsersListProps {
+  startIndex: number;
+}
+
+const UsersList = ({ startIndex = 0 }: UsersListProps) => {
   const [currentListedUsers, updateCurrentListedUsers] = useState<
     ListUserDTO[]
   >([]);
-  const { currentPage } = useContext(PagesContext);
   const { users } = useContext(UsersContext);
 
   useLayoutEffect(() => {
-    const start = currentPage * limitUsersProfilePerPage;
+    const start = startIndex * limitUsersProfilePerPage;
     const end = start + limitUsersProfilePerPage;
     const paginatedUsers = users.slice(start, end);
 
     updateCurrentListedUsers(paginatedUsers);
-  }, [currentPage, users]);
+  }, [users, startIndex]);
 
   return (
     <Stack wrap="wrap" p="3" width="100%">

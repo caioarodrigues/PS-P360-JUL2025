@@ -1,8 +1,7 @@
 import { Box, Button, Text } from "@chakra-ui/react";
 import UsersList from "../components/users-list";
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { PagesContext } from "@/context/PagesContext";
-import { useNavigate } from "react-router-dom";
 import { limitUsersProfilePerPage } from "@/constants";
 import useUsersPagination from "@/hooks/users";
 import { UsersContext } from "@/context/UsersContext";
@@ -12,30 +11,22 @@ import LoadingUsersList from "@/components/loading-users-list";
 function HomePage() {
   const { currentPage, setCurrentPage } = useContext(PagesContext);
   const { users } = useContext(UsersContext);
-  const { currentPageIndex, nextPage, previousPage } = useUsersPagination();
+  const { nextPage, previousPage } = useUsersPagination();
   const { nextPageHandler, previousPageHandler } = usePageHandlers({
     nextPage,
     previousPage,
     setCurrentPage,
-    currentPageIndex,
+    currentPageIndex: currentPage,
   });
-  const navigate = useNavigate();
 
   const mod = users.length % limitUsersProfilePerPage;
   const pagesCount =
     Math.floor(users.length / limitUsersProfilePerPage) + (mod > 0 ? 1 : 0) - 1;
-  const currentPageIndexToDisplay = currentPageIndex + 1;
+  const currentPageIndexToDisplay = currentPage + 1;
   const currentPagesCountToDisplay = pagesCount + 1;
 
-  useEffect(() => {
-    if (currentPage <= 0) navigate("/");
-    else navigate(`/?page=${currentPage}`);
-  }, [currentPage, navigate]);
-
   if (!users || users.length === 0) {
-    return (
-      <LoadingUsersList />
-    );
+    return <LoadingUsersList />;
   }
 
   return (
@@ -48,7 +39,7 @@ function HomePage() {
       width={{ base: "100%", md: "80%" }}
       placeSelf="center"
     >
-      <UsersList />
+      <UsersList startIndex={currentPage} />
       <Box
         p="3"
         display="flex"
@@ -64,7 +55,7 @@ function HomePage() {
           variant="solid"
           colorScheme="blue"
           onClick={previousPageHandler}
-          disabled={currentPageIndex <= 0}
+          disabled={currentPage <= 0}
         >
           Previous
         </Button>
@@ -72,7 +63,7 @@ function HomePage() {
           variant="solid"
           colorScheme="blue"
           onClick={() => nextPageHandler(pagesCount)}
-          disabled={currentPageIndex >= pagesCount}
+          disabled={currentPage >= pagesCount}
         >
           Next
         </Button>
