@@ -18,7 +18,6 @@ function HomePage() {
     setCurrentPage,
     currentPageIndex,
   });
-
   const navigate = useNavigate();
 
   const mod = users.length % limitUsersProfilePerPage;
@@ -30,6 +29,7 @@ function HomePage() {
   useEffect(() => {
     if (currentPage <= 0) navigate("/");
     else navigate(`/?page=${currentPage}`);
+
   }, [currentPage, navigate]);
 
   return (
