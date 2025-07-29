@@ -54,19 +54,19 @@ Lista todos os usuários cadastrados na página principal, exibindo 6 itens por 
 
 Exibe uma lista agrupada a cada 6 usuários. 
 
-![página inicial (mobile)](docs/1.png)
-![página inicial (desktop)](docs/2.png)
+<img src="docs/1.png" alt="página inicial (mobile)" />
+<img src="docs/2.png" alt="página inicial (desktop)" />
 
 `Detalhes do usuário`
 
 Mostra todos os atributos de um usuário selecionado.
 
-![página inicial (desktop)](docs/5.png)
-![página inicial (desktop)](docs/6.png)
+<img src="docs/5.png" alt="página de detalhes (mobile)" />
+<img src="docs/6.png" alt="página de detalhes (desktop)" />
 
 `Realizando buscas`
 
 Ao digitar no componente de input, é realizada uma busca simultânea entre os nomes e emails dos usuários armazenados localmente. Ao clicar no nome ou foto listado no resultado, o usuário é direcionado para a página de detalhes. 
 
-![página de pesquisa (mobile)](docs/3.png)
-![página de pesquisa (desktop)](docs/4.png)
+<img src="docs/3.png" alt="página de pesquisa (mobile)" />
+<img src="docs/4.png" alt="página de pesquisa (desktop)" />
